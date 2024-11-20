@@ -58,7 +58,7 @@ File koneksi.php memastikan aplikasi dapat berkomunikasi dengan database latihan
 Jika koneksi berhasil, program dapat melanjutkan operasi database, seperti membaca, menulis, atau memperbarui data. Jika gagal, sistem akan berhenti dan memberikan notifikasi.  
 ![image](https://github.com/user-attachments/assets/69c43460-65b3-4f3a-8a61-fc9c2d9aa2b6) 
 
-# 1. Membuat file index untuk menampilkan data (Read) (index.php) 
+# 2. Membuat file index untuk menampilkan data (Read) (index.php) 
 ```sh
 <!DOCTYPE html>
 <html lang="en">
@@ -160,7 +160,7 @@ Kode index.php ini menampilkan data barang dalam bentuk tabel dinamis menggunaka
 
 ![image](https://github.com/user-attachments/assets/20391de8-3c62-4eed-9d72-4225c8a1ce18) 
 
-# 2 Tambah Barang
+# 3 Tambah Barang
 ```sh
 <!DOCTYPE html>
 <html lang="en">
@@ -255,7 +255,7 @@ Form ini akan mengirimkan data ke server untuk disimpan (termasuk data nama bara
 Form ini menggunakan metode POST untuk mengirim data ke server dan akan memproses data yang dimasukkan (termasuk mengunggah gambar) ke dalam database yang akan ditangani oleh file PHP ``tambah.php``.  
 ![image](https://github.com/user-attachments/assets/3a704755-4a21-464c-b975-cd8a2b923dd7) 
 
-# 3 Ubah Barang 
+# 4 Ubah Barang 
 ```sh
 <?php
 error_reporting(E_ALL);
@@ -397,17 +397,56 @@ Query SQL SELECT * FROM data_barang WHERE id_barang = '{$id}' digunakan untuk me
 Query UPDATE data_barang digunakan untuk memperbarui data barang yang dipilih berdasarkan ID (id_barang).  
 ![image](https://github.com/user-attachments/assets/a52e1f92-3a54-4503-95f6-bba7367c4c5f) 
 
-# 4 Hapus Data
+# 5 Hapus Data
 ```sh
 <?php
-include_once 'koneksi.php';
-$id = $_GET['id'];
-$sql = "DELETE FROM data_barang WHERE id_barang = '{$id}'";
-$result = mysqli_query($conn, $sql);
-header('location: index.php');
+$data_barang = [
+    1 => [
+        "id" => 1,
+        "gambar" => "HP Samsung Android",
+        "nama" => "HP Samsung Android",
+        "kategori" => "Elektronik",
+        "harga_jual" => 2000000,
+        "harga_beli" => 2400000,
+        "stok" => 5
+    ],
+    2 => [
+        "id" => 2,
+        "gambar" => "HP Xiaomi Android",
+        "nama" => "HP Xiaomi Android",
+        "kategori" => "Elektronik",
+        "harga_jual" => 1000000,
+        "harga_beli" => 1400000,
+        "stok" => 5
+    ],
+    3 => [
+        "id" => 3,
+        "gambar" => "HP OPPO Android",
+        "nama" => "HP OPPO Android",
+        "kategori" => "Elektronik",
+        "harga_jual" => 1800000,
+        "harga_beli" => 2300000,
+        "stok" => 5
+    ]
+];
+
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+
+    if (isset($data_barang[$id])) {
+
+        unset($data_barang[$id]);
+        echo "Barang dengan ID {$id} telah dihapus.";
+    } else {
+        echo "Barang tidak ditemukan.";
+    }
+} else {
+    echo "ID barang tidak ditemukan.";
+}
 ?>
 ```
-![image](https://github.com/user-attachments/assets/9a241b41-ac56-47a5-a7bf-5556e843820c)
+Kode PHP yang diberikan berfungsi untuk menghapus data barang berdasarkan ID yang diberikan melalui parameter URL ``($_GET['id'])``. 
+![image](https://github.com/user-attachments/assets/b1b43d4a-d069-4a2a-9359-006df2bb2e59) 
 
 
 
